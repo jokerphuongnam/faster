@@ -336,7 +336,7 @@ namespace std {
 				[](const function_type& ft) -> std::string {
 					std::string ret = "(";
 					const char* separator = "";
-					bool isRethows = false;
+					bool is_rethows = false;
 					for (const function_type::function_param& pa : ft.param_type_id) {
 						ret += separator;
 						if (pa.label) {
@@ -353,12 +353,12 @@ namespace std {
 						ret += to_string(pa.type_id);
 						ret += pa.is_varargs ? "..." : "";
 						separator = ",";
-						if (!isRethows && std::holds_alternative<function_type>(*pa.type_id)) {
-							isRethows = std::get<function_type>(*pa.type_id).isThrows;
+						if (!is_rethows && std::holds_alternative<function_type>(*pa.type_id)) {
+							is_rethows = std::get<function_type>(*pa.type_id).is_throws;
 						}
 					}
 					ret += ")";
-					ret += ft.isThrows ? isRethows ? "rethrows:" : "throws:" : ":";
+					ret += ft.is_throws ? is_rethows ? "rethrows:" : "throws:" : ":";
 					ret += to_string(ft.return_type_id);
 					return ret;
 				},

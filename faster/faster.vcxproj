@@ -143,10 +143,12 @@
   <ItemGroup>
     <ClInclude Include="compiler.hpp" />
     <ClInclude Include="compiler_context.hpp" />
+    <ClInclude Include="compiler_object.hpp" />
     <ClInclude Include="errors.hpp" />
     <ClInclude Include="expression.hpp" />
     <ClInclude Include="expression_tree.hpp" />
     <ClInclude Include="helpers.hpp" />
+    <ClInclude Include="incomplete_function.hpp" />
     <ClInclude Include="lookup.hpp" />
     <ClInclude Include="push_back_stream.hpp" />
     <ClInclude Include="tokenizer.hpp" />
@@ -157,9 +159,11 @@
   <ItemGroup>
     <ClCompile Include="compiler.cpp" />
     <ClCompile Include="compiler_context.cpp" />
+    <ClCompile Include="compiler_object.cpp" />
     <ClCompile Include="errors.cpp" />
     <ClCompile Include="expression.cpp" />
     <ClCompile Include="expression_tree.cpp" />
+    <ClCompile Include="incomplete_function.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="module.cpp" />
     <ClCompile Include="push_back_stream.cpp" />

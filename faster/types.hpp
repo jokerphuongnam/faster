@@ -190,7 +190,7 @@ namespace faster {
 		};
 		type_handle return_type_id;
 		std::vector<function_param> param_type_id;
-		bool isThrows;
+		bool is_throws;
 	};
 
 	struct tuple_type {

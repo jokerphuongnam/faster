@@ -51,6 +51,12 @@
     <ClInclude Include="compiler_context.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="compiler_object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="incomplete_function.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="types.cpp">
@@ -87,6 +93,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="compiler_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="compiler_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="incomplete_function.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

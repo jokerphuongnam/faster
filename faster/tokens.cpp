@@ -64,6 +64,7 @@ namespace faster {
 			{"===", reserved_token::tripple_equal},
 
 			{"?", reserved_token::question},
+			{"|", reserved_token::object_or},
 			{":", reserved_token::colon},
 
 			{",", reserved_token::comma},
@@ -71,11 +72,13 @@ namespace faster {
 
 			{"...", reserved_token::ellippsis},
 
-			{"<..", reserved_token::lt_double_dot},
-			{">..", reserved_token::gt_double_dot},
+			{"<..", reserved_token::lt_concat},
+			{">..", reserved_token::gt_concat},
 
-			{"..<", reserved_token::double_dot_lt},
-			{"..>", reserved_token::double_dot_gt},
+			{"..<", reserved_token::concat_lt},
+			{"..>", reserved_token::concat_gt},
+
+			{"??", reserved_token::null_coalescing},
 
 			{";", reserved_token::semicolon},
 
@@ -132,6 +135,7 @@ namespace faster {
 			{"switch", reserved_token::kw_switch},
 			{"case", reserved_token::kw_case},
 			{"default", reserved_token::kw_default},
+			{"fallthough", reserved_token::kw_fallthough},
 
 			{"throw", reserved_token::kw_throw},
 			{"throws", reserved_token::kw_throws},

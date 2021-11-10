@@ -104,13 +104,19 @@ namespace faster {
 					return token(*t, line_number, char_index);
 				}
 			}
-
+			int size;
 			do {
 				word.push_back(char(c));
+				size = word.size();
 				c = stream();
 
 				if (is_start_dot) {
-					if (std::isalpha(c)) {
+					if (size > 2 && word.back() == '.' && std::isalpha(c)) {
+						if (count_dot_in_number(word.substr(1, word.size() - 2)) == 0) {
+							stream.push_back(c);
+							word.pop_back();
+							break;
+						}
 						stream.push_back(c);
 						do {
 							stream.push_back(word.back());
@@ -118,21 +124,35 @@ namespace faster {
 						} while (word.size());
 						return fetch_operator(stream);
 					}
-				}
-				else {
-					if (c == '.' && std::isalpha(word.back())) {
-						break;
+					else {
+						if (c == '.' && std::isalpha(word.back())) {
+							break;
+						}
+						else if (word.back() == '.' && std::isalpha(c)) {
+							stream.push_back(c);
+							break;
+						}
 					}
 				}
 
-				if (
-					(word.back() == '.' || c == '.' && std::isalpha(word.back())) && word.size() > 1) {
+				if (word.back() == '.' && c == '.') {
 					stream.push_back(c);
 					do {
 						stream.push_back(word.back());
 						word.pop_back();
 					} while (word.size());
 					return fetch_operator(stream);
+				}
+				if (c == '.' && std::isalpha(word.back())) {
+					break;
+				}
+				else if (word.back() == '.' && std::isalpha(c)) {
+					if (count_dot_in_number(word.substr(0, word.size() - 1)) == 0) {
+						word.pop_back();
+						break;
+					}
+					stream.push_back(c);
+					break;
 				}
 
 				if ((c == ' ' || c == '#') && word.size() > 1) {
@@ -178,12 +198,11 @@ namespace faster {
 				}
 			}
 
-			const char end = word.back();
+			const char last_word = std::tolower(word.back());
 			std::string sub = word.substr(0, word.size() - 1);
 
 			if (is_start_dot) {
-				char last_word = word.back();
-				if (last_word == 'f' || last_word == 'F') {
+				if (last_word == 'f') {
 					std::string number = sub.substr(1, sub.size() - 1);
 					if (count_dot_in_number(number) == 0) {
 						word = "0" + word;
@@ -200,8 +219,8 @@ namespace faster {
 						size_t remaining = word.size() - (endptr - word.c_str());
 						throw unexpected_error(
 							std::string(1, char(*endptr)),
-							stream.line_number() - 1,
-							stream.char_index() - remaining - 1
+							stream.line_number(),
+							stream.char_index() - remaining
 						);
 					}
 				}
@@ -209,7 +228,7 @@ namespace faster {
 
 			short count_dot_in_sub = 2;
 			if (is_start_underscore) {
-				if (end == 'f' || end == 'F' || end == 'l' || end == 'L') {
+				if (last_word == 'f' || last_word == 'l') {
 					count_dot_in_sub = count_dot_in_number(sub.substr(1, sub.size() - 1));
 					if (count_dot_in_sub < 2) {
 						throw syntax_error(word, line_number, char_index);
@@ -224,7 +243,7 @@ namespace faster {
 				count_dot_in_sub = 2;
 			}
 			else {
-				if (end == 'f' || end == 'F' || end == 'l' || end == 'L') {
+				if (last_word == 'f' || last_word == 'l') {
 					count_dot_in_sub = count_dot_in_number(word.substr(0, word.size() - 1));
 				}
 				else {
@@ -256,15 +275,15 @@ namespace faster {
 			}
 			if (std::isdigit(word.front())) {
 				if (count_dot_in_sub < 2) {
-					if (end == 'F' || end == 'f') {
+					if (last_word == 'f') {
 						float num = std::stof(sub);
 						return token(num, line_number, char_index);
 					}
-					if ((end == 'L' || end == 'l')) {
+					if (last_word == 'l') {
 						long num = std::stol(sub);
 						return token(num, line_number, char_index);
 					}
-					if (std::isdigit(end)) {
+					if (std::isdigit(last_word)) {
 						if (count_dot_in_sub == 0) {
 							int num = std::atoi(word.c_str());
 							return token(num, line_number, char_index);
@@ -474,7 +493,7 @@ namespace faster {
 	tokens_iterator::tokens_iterator(push_back_stream& stream) :
 		_current(eof(), 0, 0),
 		_get_next_token([&stream]() {
-		return tokenize(stream);
+				return tokenize(stream);
 			}
 		)
 	{

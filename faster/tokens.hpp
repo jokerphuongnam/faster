@@ -65,6 +65,7 @@ namespace faster {
 		tripple_equal,
 
 		question,
+		object_or,
 		colon,
 
 		comma,
@@ -73,11 +74,13 @@ namespace faster {
 
 		ellippsis,
 
-		lt_double_dot,
-		gt_double_dot,
+		lt_concat,
+		gt_concat,
 
-		double_dot_lt,
-		double_dot_gt,
+		concat_lt,
+		concat_gt,
+
+		null_coalescing,
 
 		semicolon,
 
@@ -130,6 +133,7 @@ namespace faster {
 		kw_switch,
 		kw_case,
 		kw_default,
+		kw_fallthough,
 
 		kw_throw,
 		kw_throws,

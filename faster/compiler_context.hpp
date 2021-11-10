@@ -7,6 +7,7 @@
 #include <string>
 
 #include "types.hpp"
+#include "runtime_context.hpp"
 
 namespace faster {
 	enum struct identifier_scope {
