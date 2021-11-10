@@ -1,0 +1,8 @@
+
+
+class A {
+    var _a: Int?
+    var a: Int {
+        a ?? 0
+    }
+}
